@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shift123</title>
+<style>
+  body { font-family: sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+  .asset { margin-bottom: 30px; border: 1px solid #ddd; padding: 15px; border-radius: 8px; }
+  .asset img, .asset video { max-width: 100%; display: block; margin-bottom: 8px; }
+  .headers { font-family: monospace; font-size: 12px; background: #f5f5f5; padding: 8px; white-space: pre-wrap; word-break: break-all; }
+  h1 { margin-bottom: 0; }
+  .sub { color: #666; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<h1>shift123.online</h1>
+<p class="sub">Test site for Vergecloud CDN onboarding.</p>
+
+<div class="asset">
+  <h3>Image 1 — static asset (should cache normally)</h3>
+  <img src="https://picsum.photos/id/237/600/400" data-check-url="https://picsum.photos/id/237/600/400">
+  <div class="headers" id="h1">Loading headers...</div>
+</div>
+
+<div class="asset">
+  <h3>Image 2 — cache-busted with timestamp query param (should always MISS)</h3>
+  <img id="img2" src="">
+  <div class="headers" id="h2">Loading headers...</div>
+</div>
+
+<div class="asset">
+  <h3>Video — larger asset, good for TTFB / range-request caching tests</h3>
+  <video controls data-check-url="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4">
+    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+  </video>
+  <div class="headers" id="h3">Loading headers...</div>
+</div>
+
+<script>
+  // cache-buster for image 2
+  document.getElementById('img2').src = 'https://picsum.photos/id/1015/600/400?t=' + Date.now();
+
+  async function checkHeaders(url, targetId) {
+    try {
+      const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+      let out = 'URL: ' + url + '\n';
+      out += 'Status: ' + res.status + '\n';
+      for (const [key, value] of res.headers.entries()) {
+        out += key + ': ' + value + '\n';
+      }
+      document.getElementById(targetId).textContent = out;
+    } catch (e) {
+      document.getElementById(targetId).textContent = 'Could not fetch headers (likely CORS-restricted): ' + e.message;
+    }
+  }
+
+  checkHeaders('https://picsum.photos/id/237/600/400', 'h1');
+  checkHeaders(document.getElementById('img2').src, 'h2');
+  checkHeaders('https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', 'h3');
+</script>
+
+</body>
+</html>
