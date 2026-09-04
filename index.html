@@ -1,294 +1,274 @@
-<!-- 
-  MEDIA GALLERY COMPONENT
-  Replace the placeholder image/video URLs in the .mg-grid section below with your own.
--->
-
-<section class="mg-gallery" id="mg-gallery">
-  <div class="mg-head">
-    <h2>Gallery</h2>
-    <div class="mg-filters">
-      <button class="mg-filter active" data-filter="all">All</button>
-      <button class="mg-filter" data-filter="image">Photos</button>
-      <button class="mg-filter" data-filter="video">Videos</button>
-    </div>
-  </div>
-
-  <div class="mg-grid">
-    <figure class="mg-item mg-span-2" data-type="image">
-      <img src="https://picsum.photos/id/1015/900/700" alt="Mountain river valley" loading="lazy">
-    </figure>
-
-    <figure class="mg-item" data-type="video">
-      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline preload="metadata"></video>
-      <span class="mg-play">▶</span>
-    </figure>
-
-    <figure class="mg-item" data-type="image">
-      <img src="https://picsum.photos/id/1025/700/700" alt="Dog portrait" loading="lazy">
-    </figure>
-
-    <figure class="mg-item" data-type="image">
-      <img src="https://picsum.photos/id/1035/700/900" alt="Forest path" loading="lazy">
-    </figure>
-
-    <figure class="mg-item mg-span-2" data-type="video">
-      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4" muted loop playsinline preload="metadata"></video>
-      <span class="mg-play">▶</span>
-    </figure>
-
-    <figure class="mg-item" data-type="image">
-      <img src="https://picsum.photos/id/1043/700/700" alt="Desert road" loading="lazy">
-    </figure>
-
-    <figure class="mg-item" data-type="image">
-      <img src="https://picsum.photos/id/1050/700/900" alt="City street" loading="lazy">
-    </figure>
-
-    <figure class="mg-item" data-type="video">
-      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline preload="metadata"></video>
-      <span class="mg-play">▶</span>
-    </figure>
-
-    <figure class="mg-item mg-span-2" data-type="image">
-      <img src="https://picsum.photos/id/1074/900/700" alt="Coastline aerial view" loading="lazy">
-    </figure>
-  </div>
-</section>
-
-<div class="mg-lightbox" id="mg-lightbox">
-  <button class="mg-close" id="mg-close" aria-label="Close">✕</button>
-  <div class="mg-lightbox-inner" id="mg-lightbox-inner"></div>
-</div>
-
-<style>
-  .mg-gallery {
-    --mg-bg: #121212;
-    --mg-surface: #1b1b1b;
-    --mg-text: #f2f0ea;
-    --mg-muted: #9a958c;
-    --mg-accent: #c98f4e;
-    --mg-gap: 10px;
-    background: var(--mg-bg);
-    color: var(--mg-text);
-    padding: 56px 24px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
-
-  .mg-head {
-    max-width: 1180px;
-    margin: 0 auto 28px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .mg-head h2 {
-    font-size: 28px;
-    font-weight: 600;
-    margin: 0;
-    letter-spacing: -0.01em;
-  }
-
-  .mg-filters {
-    display: flex;
-    gap: 8px;
-  }
-
-  .mg-filter {
-    background: transparent;
-    border: 1px solid #3a3a3a;
-    color: var(--mg-muted);
-    padding: 7px 16px;
-    border-radius: 999px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-
-  .mg-filter:hover {
-    color: var(--mg-text);
-    border-color: #666;
-  }
-
-  .mg-filter.active {
-    background: var(--mg-text);
-    color: #111;
-    border-color: var(--mg-text);
-  }
-
-  .mg-grid {
-    max-width: 1180px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 200px;
-    grid-auto-flow: dense;
-    gap: var(--mg-gap);
-  }
-
-  .mg-item {
-    position: relative;
-    margin: 0;
-    overflow: hidden;
-    border-radius: 4px;
-    background: var(--mg-surface);
-    cursor: pointer;
-  }
-
-  .mg-item.mg-span-2 {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-
-  .mg-item img,
-  .mg-item video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease, filter 0.4s ease;
-  }
-
-  .mg-item:hover img,
-  .mg-item:hover video {
-    transform: scale(1.04);
-    filter: brightness(0.85);
-  }
-
-  .mg-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    padding-left: 3px;
-    pointer-events: none;
-    backdrop-filter: blur(2px);
-  }
-
-  .mg-lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(6, 6, 6, 0.94);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-  }
-
-  .mg-lightbox.open {
-    display: flex;
-  }
-
-  .mg-lightbox-inner {
-    max-width: 92vw;
-    max-height: 88vh;
-  }
-
-  .mg-lightbox-inner img,
-  .mg-lightbox-inner video {
-    max-width: 92vw;
-    max-height: 88vh;
-    display: block;
-    border-radius: 4px;
-  }
-
-  .mg-close {
-    position: absolute;
-    top: 24px;
-    right: 28px;
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-    line-height: 1;
-  }
-
-  @media (max-width: 720px) {
-    .mg-grid {
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 150px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <style>
+    .mg-gallery {
+      --mg-bg: #121212;
+      --mg-surface: #1b1b1b;
+      --mg-text: #f2f0ea;
+      --mg-muted: #9a958c;
+      --mg-accent: #c98f4e;
+      --mg-gap: 10px;
+      background: var(--mg-bg);
+      color: var(--mg-text);
+      padding: 56px 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
+    .mg-head {
+      max-width: 1180px;
+      margin: 0 auto 28px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .mg-head h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .mg-filters {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mg-filter {
+      background: transparent;
+      border: 1px solid #3a3a3a;
+      color: var(--mg-muted);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .mg-filter:hover {
+      color: var(--mg-text);
+      border-color: #666;
+    }
+
+    .mg-filter.active {
+      background: var(--mg-text);
+      color: #111;
+      border-color: var(--mg-text);
+    }
+
+    .mg-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      grid-auto-flow: dense;
+      gap: var(--mg-gap);
+    }
+
+    .mg-item {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--mg-surface);
+      cursor: pointer;
+    }
+
+    .mg-item.mg-span-2 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
     .mg-item img,
     .mg-item video {
-      transition: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
     }
-  }
-</style>
 
-<script>
-  (function () {
-    const filters = document.querySelectorAll('.mg-filter');
-    const items = document.querySelectorAll('.mg-item');
-    const lightbox = document.getElementById('mg-lightbox');
-    const lightboxInner = document.getElementById('mg-lightbox-inner');
-    const closeBtn = document.getElementById('mg-close');
+    .mg-item:hover img,
+    .mg-item:hover video {
+      transform: scale(1.04);
+      filter: brightness(0.85);
+    }
 
-    items.forEach(function (item) {
-      const vid = item.querySelector('video');
-      if (vid) {
-        item.addEventListener('mouseenter', function () { vid.play().catch(function(){}); });
-        item.addEventListener('mouseleave', function () { vid.pause(); vid.currentTime = 0; });
+    .mg-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      padding-left: 3px;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+    }
+
+    .mg-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 6, 6, 0.94);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .mg-lightbox.open {
+      display: flex;
+    }
+
+    .mg-lightbox-inner {
+      max-width: 92vw;
+      max-height: 88vh;
+    }
+
+    .mg-lightbox-inner img,
+    .mg-lightbox-inner video {
+      max-width: 92vw;
+      max-height: 88vh;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .mg-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    @media (max-width: 720px) {
+      .mg-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
       }
-
-      item.addEventListener('click', function () {
-        const type = item.dataset.type;
-        lightboxInner.innerHTML = '';
-        if (type === 'image') {
-          const src = item.querySelector('img').src;
-          const el = document.createElement('img');
-          el.src = src;
-          lightboxInner.appendChild(el);
-        } else {
-          const src = item.querySelector('video').src;
-          const el = document.createElement('video');
-          el.src = src;
-          el.controls = true;
-          el.autoplay = true;
-          lightboxInner.appendChild(el);
-        }
-        lightbox.classList.add('open');
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      lightboxInner.innerHTML = '';
     }
 
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeLightbox();
-    });
+    @media (prefers-reduced-motion: reduce) {
+      .mg-item img,
+      .mg-item video {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
 
-    filters.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        filters.forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        items.forEach(function (item) {
-          const show = filter === 'all' || item.dataset.type === filter;
-          item.style.display = show ? '' : 'none';
+  <section class="mg-gallery" id="mg-gallery">
+    <div class="mg-head">
+      <h2>Gallery</h2>
+      <div class="mg-filters">
+        <button class="mg-filter active" data-filter="all">All</button>
+        <button class="mg-filter" data-filter="image">Photos</button>
+        <button class="mg-filter" data-filter="video">Videos</button>
+      </div>
+    </div>
+
+    <div class="mg-grid">
+      <figure class="mg-item mg-span-2" data-type="image">
+        <img src="artworks-33JSsucEziFGHKbT-QR8W4Q-t500x500.jpg" alt="Artwork" loading="lazy">
+      </figure>
+
+      <figure class="mg-item mg-span-2" data-type="video">
+        <video src="vidssave.comElMatador1080p60.mp4" muted loop playsinline preload="metadata"></video>
+        <span class="mg-play">▶</span>
+      </figure>
+
+      <figure class="mg-item mg-span-2" data-type="video">
+        <video src="vidssave.comVR46Status720p.mp4" muted loop playsinline preload="metadata"></video>
+        <span class="mg-play">▶</span>
+      </figure>
+    </div>
+  </section>
+
+  <div class="mg-lightbox" id="mg-lightbox">
+    <button class="mg-close" id="mg-close" aria-label="Close">✕</button>
+    <div class="mg-lightbox-inner" id="mg-lightbox-inner"></div>
+  </div>
+
+  <script>
+    (function () {
+      const filters = document.querySelectorAll('.mg-filter');
+      const items = document.querySelectorAll('.mg-item');
+      const lightbox = document.getElementById('mg-lightbox');
+      const lightboxInner = document.getElementById('mg-lightbox-inner');
+      const closeBtn = document.getElementById('mg-close');
+
+      items.forEach(function (item) {
+        const vid = item.querySelector('video');
+        if (vid) {
+          item.addEventListener('mouseenter', function () { vid.play().catch(function(){}); });
+          item.addEventListener('mouseleave', function () { vid.pause(); vid.currentTime = 0; });
+        }
+
+        item.addEventListener('click', function () {
+          const type = item.dataset.type;
+          lightboxInner.innerHTML = '';
+          if (type === 'image') {
+            const src = item.querySelector('img').src;
+            const el = document.createElement('img');
+            el.src = src;
+            lightboxInner.appendChild(el);
+          } else {
+            const src = item.querySelector('video').src;
+            const el = document.createElement('video');
+            el.src = src;
+            el.controls = true;
+            el.autoplay = true;
+            lightboxInner.appendChild(el);
+          }
+          lightbox.classList.add('open');
         });
       });
-    });
-  })();
-</script>
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightboxInner.innerHTML = '';
+      }
+
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filters.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          items.forEach(function (item) {
+            const show = filter === 'all' || item.dataset.type === filter;
+            item.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
