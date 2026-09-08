@@ -60,46 +60,6 @@
     }
 
     /* ==========================
-       TOP NAVIGATION
-    ========================== */
-
-    .mg-nav-main {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 34px;
-    }
-
-    .mg-nav-main a {
-      color: var(--mg-muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-
-      padding: 9px 14px;
-
-      border: 1px solid var(--mg-border);
-      border-radius: 6px;
-
-      transition:
-        color 0.18s ease,
-        border-color 0.18s ease,
-        background 0.18s ease;
-    }
-
-    .mg-nav-main a:hover {
-      color: var(--mg-text);
-      border-color: var(--mg-border-hover);
-      background: #1d1d1d;
-    }
-
-    .mg-nav-main a.active {
-      background: var(--mg-text);
-      color: #111;
-      border-color: var(--mg-text);
-    }
-
-    /* ==========================
        HEADER
     ========================== */
 
@@ -168,6 +128,11 @@
       font-weight: 500;
 
       cursor: pointer;
+
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
       transition:
         background 0.18s ease,
@@ -548,12 +513,7 @@
       .mg-gallery {
         padding: 32px 14px 48px;
       }
-
-      .mg-nav-main {
-        overflow-x: auto;
-      }
-
-      .mg-head {
+.mg-head {
         align-items: flex-start;
         flex-direction: column;
         margin-bottom: 20px;
@@ -611,23 +571,7 @@
   <section class="mg-gallery" id="mg-gallery">
 
     <div class="mg-container">
-
-      <!-- MAIN URL NAVIGATION -->
-      <nav class="mg-nav-main">
-        <a href="/" class="active">
-          Home
-        </a>
-
-        <a href="/images/">
-          Images
-        </a>
-
-        <a href="/videos/">
-          Videos
-        </a>
-      </nav>
-
-      <!-- HEADER -->
+<!-- HEADER -->
       <div class="mg-head">
 
         <div class="mg-heading">
@@ -635,35 +579,31 @@
           <span class="mg-count" id="mg-count"></span>
         </div>
 
-        <div
+        <nav
           class="mg-filters"
-          role="group"
-          aria-label="Gallery filters"
+          aria-label="Gallery navigation"
         >
-          <button
+          <a
             class="mg-filter active"
-            data-filter="all"
-            type="button"
+            href="/"
           >
             All
-          </button>
+          </a>
 
-          <button
+          <a
             class="mg-filter"
-            data-filter="image"
-            type="button"
+            href="/images/"
           >
-            Photos
-          </button>
+            Images
+          </a>
 
-          <button
+          <a
             class="mg-filter"
-            data-filter="video"
-            type="button"
+            href="/videos/"
           >
             Videos
-          </button>
-        </div>
+          </a>
+        </nav>
 
       </div>
 
@@ -842,12 +782,7 @@
 
   <script>
     (function () {
-
-      const filters = Array.from(
-        document.querySelectorAll(".mg-filter")
-      );
-
-      const allItems = Array.from(
+const allItems = Array.from(
         document.querySelectorAll(".mg-item")
       );
 
@@ -1173,88 +1108,6 @@
 
         }
       );
-
-      filters.forEach(function (button) {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-            const filter =
-              button.dataset.filter;
-
-            filters.forEach(
-              function (filterButton) {
-
-                filterButton
-                  .classList
-                  .remove("active");
-
-              }
-            );
-
-            button.classList.add(
-              "active"
-            );
-
-            allItems.forEach(
-              function (item) {
-
-                const show =
-                  filter === "all" ||
-                  item.dataset.type === filter;
-
-                if (show) {
-
-                  item.classList.remove(
-                    "mg-hidden"
-                  );
-
-                } else {
-
-                  const video =
-                    item.querySelector(
-                      "video"
-                    );
-
-                  if (video) {
-
-                    video.pause();
-
-                    try {
-                      video.currentTime = 0;
-                    } catch (error) {}
-
-                  }
-
-                  item.classList.add(
-                    "mg-hidden"
-                  );
-
-                }
-
-              }
-            );
-
-            visibleItems =
-              allItems.filter(
-                function (item) {
-
-                  return !item
-                    .classList
-                    .contains(
-                      "mg-hidden"
-                    );
-
-                }
-              );
-
-            updateGalleryCount();
-
-          }
-        );
-
-      });
 
       updateGalleryCount();
 
