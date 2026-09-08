@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Videos</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #101214;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 50px 24px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .back {
+      border: 1px solid #444;
+      padding: 10px 16px;
+      border-radius: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    video {
+      width: 100%;
+      background: #000;
+      border-radius: 8px;
+      display: block;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+      <h1>Videos</h1>
+      <a class="back" href="/">Home</a>
+    </div>
+
+    <div class="grid">
+
+      <video controls preload="metadata">
+        <source
+          src="vidssave.comElMatador1080p60.mp4"
+          type="video/mp4"
+        >
+      </video>
+
+      <video controls preload="metadata">
+        <source
+          src="vidssave.comVR46Status720p.mp4"
+          type="video/mp4"
+        >
+      </video>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
