@@ -3,57 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Gallery</title>
+
   <style>
+    /* =========================================================
+       BASE
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #121212;
+      color: #f2f0ea;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Helvetica,
+        Arial,
+        sans-serif;
+    }
+
+    body.mg-no-scroll {
+      overflow: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+
+    /* =========================================================
+       GALLERY
+    ========================================================= */
+
     .mg-gallery {
       --mg-bg: #121212;
       --mg-surface: #1b1b1b;
+      --mg-surface-hover: #222;
       --mg-text: #f2f0ea;
       --mg-muted: #9a958c;
+      --mg-border: #343434;
+      --mg-border-hover: #666;
       --mg-accent: #c98f4e;
       --mg-gap: 10px;
+
+      min-height: 100vh;
       background: var(--mg-bg);
       color: var(--mg-text);
-      padding: 56px 24px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      padding: 56px 24px 72px;
     }
 
-    .mg-head {
+    .mg-container {
+      width: 100%;
       max-width: 1180px;
-      margin: 0 auto 28px;
+      margin: 0 auto;
+    }
+
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .mg-head {
+      margin-bottom: 28px;
+
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+
+      gap: 18px;
+    }
+
+    .mg-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
     }
 
     .mg-head h2 {
-      font-size: 28px;
-      font-weight: 600;
       margin: 0;
-      letter-spacing: -0.01em;
+
+      font-size: clamp(26px, 3vw, 34px);
+      line-height: 1.1;
+      font-weight: 600;
+
+      letter-spacing: -0.025em;
     }
+
+    .mg-count {
+      color: var(--mg-muted);
+      font-size: 13px;
+    }
+
+
+    /* =========================================================
+       FILTERS
+    ========================================================= */
 
     .mg-filters {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 7px;
+
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .mg-filters::-webkit-scrollbar {
+      display: none;
     }
 
     .mg-filter {
+      flex-shrink: 0;
+
+      min-height: 36px;
+      padding: 7px 15px;
+
+      border: 1px solid var(--mg-border);
+      border-radius: 6px;
+
       background: transparent;
-      border: 1px solid #3a3a3a;
       color: var(--mg-muted);
-      padding: 7px 16px;
-      border-radius: 999px;
+
       font-size: 13px;
+      font-weight: 500;
+
       cursor: pointer;
-      transition: border-color 0.15s ease, color 0.15s ease;
+
+      transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
     }
 
     .mg-filter:hover {
       color: var(--mg-text);
-      border-color: #666;
+      border-color: var(--mg-border-hover);
+      background: #1d1d1d;
+    }
+
+    .mg-filter:active {
+      transform: scale(0.97);
     }
 
     .mg-filter.active {
@@ -62,23 +163,54 @@
       border-color: var(--mg-text);
     }
 
+    .mg-filter:focus-visible {
+      outline: 2px solid var(--mg-accent);
+      outline-offset: 3px;
+    }
+
+
+    /* =========================================================
+       GRID
+    ========================================================= */
+
     .mg-grid {
-      max-width: 1180px;
-      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-auto-rows: 200px;
       grid-auto-flow: dense;
+
       gap: var(--mg-gap);
     }
 
+
+    /* =========================================================
+       GALLERY ITEM
+    ========================================================= */
+
     .mg-item {
       position: relative;
+
       margin: 0;
+
       overflow: hidden;
-      border-radius: 4px;
+
+      border-radius: 6px;
       background: var(--mg-surface);
+
       cursor: pointer;
+
+      opacity: 1;
+      transform: scale(1);
+
+      transition:
+        opacity 0.22s ease,
+        transform 0.22s ease,
+        background 0.2s ease;
+    }
+
+    .mg-item:hover {
+      background: var(--mg-surface-hover);
     }
 
     .mg-item.mg-span-2 {
@@ -86,201 +218,1245 @@
       grid-row: span 2;
     }
 
+    .mg-item.mg-hidden {
+      display: none;
+    }
+
     .mg-item img,
     .mg-item video {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
       display: block;
-      transition: transform 0.4s ease, filter 0.4s ease;
+
+      transition:
+        transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter 0.35s ease;
+    }
+
+    .mg-item::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0) 45%
+        );
+
+      opacity: 0;
+
+      transition: opacity 0.3s ease;
+    }
+
+    .mg-item:hover::after {
+      opacity: 1;
     }
 
     .mg-item:hover img,
     .mg-item:hover video {
-      transform: scale(1.04);
-      filter: brightness(0.85);
+      transform: scale(1.035);
+      filter: brightness(0.88);
     }
+
+
+    /* =========================================================
+       TYPE LABEL
+    ========================================================= */
+
+    .mg-type {
+      position: absolute;
+      z-index: 3;
+
+      left: 12px;
+      bottom: 12px;
+
+      color: rgba(255, 255, 255, 0.88);
+
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+
+      opacity: 0;
+      transform: translateY(4px);
+
+      transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+
+      pointer-events: none;
+    }
+
+    .mg-item:hover .mg-type {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       PLAY ICON
+    ========================================================= */
 
     .mg-play {
       position: absolute;
+      z-index: 4;
+
       top: 50%;
       left: 50%;
+
+      width: 48px;
+      height: 48px;
+
       transform: translate(-50%, -50%);
-      width: 46px;
-      height: 46px;
+
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.55);
+
+      background: rgba(5, 5, 5, 0.62);
       color: #fff;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+
+      font-size: 14px;
+
       padding-left: 3px;
+
       pointer-events: none;
-      backdrop-filter: blur(2px);
+
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        opacity 0.25s ease;
     }
 
+    .mg-item:hover .mg-play {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: rgba(5, 5, 5, 0.76);
+    }
+
+    .mg-item.mg-video-playing .mg-play {
+      opacity: 0;
+    }
+
+
+    /* =========================================================
+       LIGHTBOX
+    ========================================================= */
+
     .mg-lightbox {
-      display: none;
       position: fixed;
+      z-index: 9999;
+
       inset: 0;
-      background: rgba(6, 6, 6, 0.94);
-      z-index: 999;
+
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px;
+
+      padding: 60px 80px;
+
+      background: rgba(7, 7, 7, 0.96);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease;
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .mg-lightbox.open {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
     }
 
     .mg-lightbox-inner {
-      max-width: 92vw;
-      max-height: 88vh;
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+
+      transform: scale(0.975);
+
+      transition: transform 0.25s ease;
+    }
+
+    .mg-lightbox.open .mg-lightbox-inner {
+      transform: scale(1);
     }
 
     .mg-lightbox-inner img,
     .mg-lightbox-inner video {
-      max-width: 92vw;
-      max-height: 88vh;
       display: block;
-      border-radius: 4px;
+
+      max-width: 92vw;
+      max-height: 84vh;
+
+      width: auto;
+      height: auto;
+
+      border-radius: 5px;
+
+      object-fit: contain;
+
+      box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.35);
+    }
+
+
+    /* =========================================================
+       LIGHTBOX TOP BAR
+    ========================================================= */
+
+    .mg-lightbox-top {
+      position: absolute;
+      z-index: 10;
+
+      top: 22px;
+      left: 28px;
+      right: 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      pointer-events: none;
+    }
+
+    .mg-lightbox-counter {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 13px;
+      letter-spacing: 0.03em;
     }
 
     .mg-close {
-      position: absolute;
-      top: 24px;
-      right: 28px;
-      background: transparent;
-      border: none;
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
-      font-size: 22px;
+
+      font-size: 18px;
+
       cursor: pointer;
-      line-height: 1;
+
+      pointer-events: auto;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
     }
 
-    @media (max-width: 720px) {
+    .mg-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: rotate(5deg);
+    }
+
+
+    /* =========================================================
+       LIGHTBOX NAVIGATION
+    ========================================================= */
+
+    .mg-nav {
+      position: absolute;
+      z-index: 10;
+
+      top: 50%;
+
+      width: 46px;
+      height: 46px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transform: translateY(-50%);
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+
+      font-size: 22px;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .mg-nav:hover {
+      background: rgba(255, 255, 255, 0.13);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .mg-prev {
+      left: 22px;
+    }
+
+    .mg-next {
+      right: 22px;
+    }
+
+    .mg-prev:hover {
+      transform: translateY(-50%) translateX(-2px);
+    }
+
+    .mg-next:hover {
+      transform: translateY(-50%) translateX(2px);
+    }
+
+
+    /* =========================================================
+       EMPTY STATE
+    ========================================================= */
+
+    .mg-empty {
+      display: none;
+
+      padding: 60px 20px;
+
+      color: var(--mg-muted);
+      text-align: center;
+
+      font-size: 14px;
+    }
+
+
+    /* =========================================================
+       TABLET
+    ========================================================= */
+
+    @media (max-width: 900px) {
+      .mg-gallery {
+        padding: 42px 18px 56px;
+      }
+
       .mg-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 150px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 180px;
+      }
+
+      .mg-lightbox {
+        padding: 55px 60px;
       }
     }
 
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 720px) {
+      .mg-gallery {
+        padding: 32px 14px 48px;
+      }
+
+      .mg-head {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      .mg-filters {
+        width: 100%;
+      }
+
+      .mg-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 150px;
+        gap: 7px;
+      }
+
+      .mg-item {
+        border-radius: 4px;
+      }
+
+      .mg-item.mg-span-2 {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+
+      .mg-lightbox {
+        padding: 65px 14px 30px;
+      }
+
+      .mg-lightbox-inner img,
+      .mg-lightbox-inner video {
+        max-width: 100%;
+        max-height: 78vh;
+      }
+
+      .mg-lightbox-top {
+        top: 14px;
+        left: 14px;
+        right: 14px;
+      }
+
+      .mg-nav {
+        width: 40px;
+        height: 40px;
+
+        top: auto;
+        bottom: 18px;
+
+        transform: none;
+
+        background: rgba(20, 20, 20, 0.8);
+      }
+
+      .mg-prev {
+        left: calc(50% - 52px);
+      }
+
+      .mg-next {
+        right: calc(50% - 52px);
+      }
+
+      .mg-prev:hover,
+      .mg-next:hover {
+        transform: none;
+      }
+
+      .mg-type {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+
+    /* =========================================================
+       SMALL MOBILE
+    ========================================================= */
+
+    @media (max-width: 420px) {
+      .mg-grid {
+        grid-auto-rows: 130px;
+      }
+
+      .mg-head h2 {
+        font-size: 26px;
+      }
+
+      .mg-filter {
+        padding: 7px 13px;
+      }
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
     @media (prefers-reduced-motion: reduce) {
-      .mg-item img,
-      .mg-item video {
-        transition: none;
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
       }
     }
   </style>
 </head>
+
+
 <body>
 
   <section class="mg-gallery" id="mg-gallery">
-    <div class="mg-head">
-      <h2>Gallery</h2>
-      <div class="mg-filters">
-        <button class="mg-filter active" data-filter="all">All</button>
-        <button class="mg-filter" data-filter="image">Photos</button>
-        <button class="mg-filter" data-filter="video">Videos</button>
+
+    <div class="mg-container">
+
+      <!-- HEADER -->
+      <div class="mg-head">
+
+        <div class="mg-heading">
+          <h2>Gallery</h2>
+          <span class="mg-count" id="mg-count"></span>
+        </div>
+
+        <div
+          class="mg-filters"
+          role="group"
+          aria-label="Gallery filters"
+        >
+          <button
+            class="mg-filter active"
+            data-filter="all"
+            type="button"
+          >
+            All
+          </button>
+
+          <button
+            class="mg-filter"
+            data-filter="image"
+            type="button"
+          >
+            Photos
+          </button>
+
+          <button
+            class="mg-filter"
+            data-filter="video"
+            type="button"
+          >
+            Videos
+          </button>
+        </div>
+
       </div>
+
+
+      <!-- GRID -->
+      <div class="mg-grid" id="mg-grid">
+
+        <!-- IMAGE -->
+        <figure
+          class="mg-item mg-span-2"
+          data-type="image"
+          tabindex="0"
+          role="button"
+          aria-label="Open artwork"
+        >
+          <img
+            src="artworks-33JSsucEziFGHKbT-QR8W4Q-t500x500.jpg"
+            alt="Artwork"
+            loading="lazy"
+          >
+
+          <span class="mg-type">Photo</span>
+        </figure>
+
+
+        <!-- VIDEO -->
+        <figure
+          class="mg-item mg-span-2"
+          data-type="video"
+          tabindex="0"
+          role="button"
+          aria-label="Open video"
+        >
+          <video
+            src="vidssave.comElMatador1080p60.mp4"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+
+          <span class="mg-play">▶</span>
+          <span class="mg-type">Video</span>
+        </figure>
+
+
+        <!-- VIDEO -->
+        <figure
+          class="mg-item mg-span-2"
+          data-type="video"
+          tabindex="0"
+          role="button"
+          aria-label="Open video"
+        >
+          <video
+            src="vidssave.comVR46Status720p.mp4"
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+
+          <span class="mg-play">▶</span>
+          <span class="mg-type">Video</span>
+        </figure>
+
+
+        <!-- IMAGE -->
+        <figure
+          class="mg-item"
+          data-type="image"
+          tabindex="0"
+          role="button"
+          aria-label="Open boxing gloves image"
+        >
+          <img
+            src="Pngtreeboxinggloves6129663.png"
+            alt="Boxing gloves"
+            loading="lazy"
+          >
+
+          <span class="mg-type">Photo</span>
+        </figure>
+
+
+        <!-- IMAGE -->
+        <figure
+          class="mg-item"
+          data-type="image"
+          tabindex="0"
+          role="button"
+          aria-label="Open Hajime no Ippo GIF"
+        >
+          <img
+            src="HajimenoippoGIF.gif"
+            alt="Hajime no Ippo GIF"
+            loading="lazy"
+          >
+
+          <span class="mg-type">GIF</span>
+        </figure>
+
+
+        <!-- IMAGE -->
+        <figure
+          class="mg-item"
+          data-type="image"
+          tabindex="0"
+          role="button"
+          aria-label="Open Hajime no Ippo end GIF"
+        >
+          <img
+            src="hajimenoippoend-hajime.gif"
+            alt="Hajime no Ippo end GIF"
+            loading="lazy"
+          >
+
+          <span class="mg-type">GIF</span>
+        </figure>
+
+      </div>
+
+
+      <div class="mg-empty" id="mg-empty">
+        No media found.
+      </div>
+
     </div>
 
-    <div class="mg-grid">
-      <figure class="mg-item mg-span-2" data-type="image">
-        <img src="artworks-33JSsucEziFGHKbT-QR8W4Q-t500x500.jpg" alt="Artwork" loading="lazy">
-      </figure>
-
-      <figure class="mg-item mg-span-2" data-type="video">
-        <video src="vidssave.comElMatador1080p60.mp4" muted loop playsinline preload="metadata"></video>
-        <span class="mg-play">▶</span>
-      </figure>
-
-      <figure class="mg-item mg-span-2" data-type="video">
-        <video src="vidssave.comVR46Status720p.mp4" muted loop playsinline preload="metadata"></video>
-        <span class="mg-play">▶</span>
-      </figure>
-
-      <figure class="mg-item" data-type="image">
-        <img src="Pngtreeboxinggloves6129663.png" alt="Boxing gloves" loading="lazy">
-      </figure>
-
-      <figure class="mg-item" data-type="image">
-        <img src="HajimenoippoGIF.gif" alt="Hajime no Ippo GIF" loading="lazy">
-      </figure>
-
-      <figure class="mg-item" data-type="image">
-        <img src="hajimenoippoend-hajime.gif" alt="Hajime no Ippo end GIF" loading="lazy">
-      </figure>
-    </div>
   </section>
 
-  <div class="mg-lightbox" id="mg-lightbox">
-    <button class="mg-close" id="mg-close" aria-label="Close">✕</button>
-    <div class="mg-lightbox-inner" id="mg-lightbox-inner"></div>
+
+  <!-- =======================================================
+       LIGHTBOX
+  ======================================================== -->
+
+  <div
+    class="mg-lightbox"
+    id="mg-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+  >
+
+    <div class="mg-lightbox-top">
+
+      <span
+        class="mg-lightbox-counter"
+        id="mg-lightbox-counter"
+      ></span>
+
+      <button
+        class="mg-close"
+        id="mg-close"
+        type="button"
+        aria-label="Close gallery"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <button
+      class="mg-nav mg-prev"
+      id="mg-prev"
+      type="button"
+      aria-label="Previous media"
+    >
+      ‹
+    </button>
+
+
+    <div
+      class="mg-lightbox-inner"
+      id="mg-lightbox-inner"
+    ></div>
+
+
+    <button
+      class="mg-nav mg-next"
+      id="mg-next"
+      type="button"
+      aria-label="Next media"
+    >
+      ›
+    </button>
+
   </div>
+
+
 
   <script>
     (function () {
-      const filters = document.querySelectorAll('.mg-filter');
-      const items = document.querySelectorAll('.mg-item');
-      const lightbox = document.getElementById('mg-lightbox');
-      const lightboxInner = document.getElementById('mg-lightbox-inner');
-      const closeBtn = document.getElementById('mg-close');
 
-      items.forEach(function (item) {
-        const vid = item.querySelector('video');
-        if (vid) {
-          item.addEventListener('mouseenter', function () { vid.play().catch(function(){}); });
-          item.addEventListener('mouseleave', function () { vid.pause(); vid.currentTime = 0; });
-        }
+      /* =====================================================
+         ELEMENTS
+      ===================================================== */
 
-        item.addEventListener('click', function () {
-          const type = item.dataset.type;
-          lightboxInner.innerHTML = '';
-          if (type === 'image') {
-            const src = item.querySelector('img').src;
-            const el = document.createElement('img');
-            el.src = src;
-            lightboxInner.appendChild(el);
-          } else {
-            const src = item.querySelector('video').src;
-            const el = document.createElement('video');
-            el.src = src;
-            el.controls = true;
-            el.autoplay = true;
-            lightboxInner.appendChild(el);
-          }
-          lightbox.classList.add('open');
-        });
-      });
+      const filters = Array.from(
+        document.querySelectorAll(".mg-filter")
+      );
 
-      function closeLightbox() {
-        lightbox.classList.remove('open');
-        lightboxInner.innerHTML = '';
+      const allItems = Array.from(
+        document.querySelectorAll(".mg-item")
+      );
+
+      const lightbox =
+        document.getElementById("mg-lightbox");
+
+      const lightboxInner =
+        document.getElementById("mg-lightbox-inner");
+
+      const lightboxCounter =
+        document.getElementById("mg-lightbox-counter");
+
+      const closeBtn =
+        document.getElementById("mg-close");
+
+      const prevBtn =
+        document.getElementById("mg-prev");
+
+      const nextBtn =
+        document.getElementById("mg-next");
+
+      const galleryCount =
+        document.getElementById("mg-count");
+
+      const emptyState =
+        document.getElementById("mg-empty");
+
+
+      let visibleItems = [...allItems];
+
+      let currentIndex = 0;
+
+
+      /* =====================================================
+         GALLERY COUNT
+      ===================================================== */
+
+      function updateGalleryCount() {
+        const count = visibleItems.length;
+
+        galleryCount.textContent =
+          count + (count === 1 ? " item" : " items");
+
+        emptyState.style.display =
+          count === 0 ? "block" : "none";
       }
 
-      closeBtn.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox) closeLightbox();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeLightbox();
+
+      /* =====================================================
+         VIDEO HOVER PREVIEW
+      ===================================================== */
+
+      allItems.forEach(function (item) {
+
+        const video = item.querySelector("video");
+
+        if (!video) return;
+
+
+        item.addEventListener("mouseenter", function () {
+
+          video
+            .play()
+            .then(function () {
+              item.classList.add("mg-video-playing");
+            })
+            .catch(function () {
+              // Browser may prevent autoplay.
+            });
+
+        });
+
+
+        item.addEventListener("mouseleave", function () {
+
+          video.pause();
+
+          try {
+            video.currentTime = 0;
+          } catch (error) {}
+
+          item.classList.remove("mg-video-playing");
+
+        });
+
       });
 
-      filters.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          filters.forEach(function (b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          items.forEach(function (item) {
-            const show = filter === 'all' || item.dataset.type === filter;
-            item.style.display = show ? '' : 'none';
+
+      /* =====================================================
+         OPEN LIGHTBOX
+      ===================================================== */
+
+      function openLightbox(item) {
+
+        visibleItems =
+          allItems.filter(function (element) {
+            return !element.classList.contains("mg-hidden");
           });
-        });
+
+
+        currentIndex =
+          visibleItems.indexOf(item);
+
+
+        if (currentIndex === -1) {
+          return;
+        }
+
+
+        renderLightbox();
+
+
+        lightbox.classList.add("open");
+
+        lightbox.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+        document.body.classList.add(
+          "mg-no-scroll"
+        );
+
+
+        closeBtn.focus();
+
+      }
+
+
+      /* =====================================================
+         RENDER LIGHTBOX MEDIA
+      ===================================================== */
+
+      function renderLightbox() {
+
+        const item =
+          visibleItems[currentIndex];
+
+
+        if (!item) return;
+
+
+        const type =
+          item.dataset.type;
+
+
+        lightboxInner.innerHTML = "";
+
+
+        if (type === "image") {
+
+          const original =
+            item.querySelector("img");
+
+          const image =
+            document.createElement("img");
+
+          image.src = original.src;
+
+          image.alt =
+            original.alt || "Gallery image";
+
+          lightboxInner.appendChild(image);
+
+        }
+
+
+        else if (type === "video") {
+
+          const original =
+            item.querySelector("video");
+
+          const video =
+            document.createElement("video");
+
+          video.src = original.src;
+
+          video.controls = true;
+
+          video.autoplay = true;
+
+          video.playsInline = true;
+
+          lightboxInner.appendChild(video);
+
+        }
+
+
+        lightboxCounter.textContent =
+          (currentIndex + 1) +
+          " / " +
+          visibleItems.length;
+
+
+        const shouldShowNavigation =
+          visibleItems.length > 1;
+
+
+        prevBtn.style.display =
+          shouldShowNavigation
+            ? "flex"
+            : "none";
+
+        nextBtn.style.display =
+          shouldShowNavigation
+            ? "flex"
+            : "none";
+      }
+
+
+      /* =====================================================
+         CLOSE LIGHTBOX
+      ===================================================== */
+
+      function closeLightbox() {
+
+        lightbox.classList.remove("open");
+
+        lightbox.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        document.body.classList.remove(
+          "mg-no-scroll"
+        );
+
+
+        const video =
+          lightboxInner.querySelector("video");
+
+        if (video) {
+          video.pause();
+        }
+
+
+        setTimeout(function () {
+
+          if (
+            !lightbox.classList.contains("open")
+          ) {
+            lightboxInner.innerHTML = "";
+          }
+
+        }, 220);
+
+      }
+
+
+      /* =====================================================
+         PREVIOUS / NEXT
+      ===================================================== */
+
+      function previousItem() {
+
+        if (visibleItems.length <= 1) {
+          return;
+        }
+
+
+        currentIndex =
+          (
+            currentIndex -
+            1 +
+            visibleItems.length
+          ) %
+          visibleItems.length;
+
+
+        renderLightbox();
+
+      }
+
+
+      function nextItem() {
+
+        if (visibleItems.length <= 1) {
+          return;
+        }
+
+
+        currentIndex =
+          (
+            currentIndex +
+            1
+          ) %
+          visibleItems.length;
+
+
+        renderLightbox();
+
+      }
+
+
+      /* =====================================================
+         OPEN ITEMS
+      ===================================================== */
+
+      allItems.forEach(function (item) {
+
+        item.addEventListener(
+          "click",
+          function () {
+            openLightbox(item);
+          }
+        );
+
+
+        item.addEventListener(
+          "keydown",
+          function (event) {
+
+            if (
+              event.key === "Enter" ||
+              event.key === " "
+            ) {
+
+              event.preventDefault();
+
+              openLightbox(item);
+
+            }
+
+          }
+        );
+
       });
+
+
+      /* =====================================================
+         LIGHTBOX EVENTS
+      ===================================================== */
+
+      closeBtn.addEventListener(
+        "click",
+        closeLightbox
+      );
+
+
+      prevBtn.addEventListener(
+        "click",
+        function (event) {
+
+          event.stopPropagation();
+
+          previousItem();
+
+        }
+      );
+
+
+      nextBtn.addEventListener(
+        "click",
+        function (event) {
+
+          event.stopPropagation();
+
+          nextItem();
+
+        }
+      );
+
+
+      lightbox.addEventListener(
+        "click",
+        function (event) {
+
+          if (
+            event.target === lightbox ||
+            event.target === lightboxInner
+          ) {
+
+            closeLightbox();
+
+          }
+
+        }
+      );
+
+
+      document.addEventListener(
+        "keydown",
+        function (event) {
+
+          if (
+            !lightbox.classList.contains("open")
+          ) {
+            return;
+          }
+
+
+          if (event.key === "Escape") {
+
+            closeLightbox();
+
+          }
+
+
+          else if (event.key === "ArrowLeft") {
+
+            previousItem();
+
+          }
+
+
+          else if (event.key === "ArrowRight") {
+
+            nextItem();
+
+          }
+
+        }
+      );
+
+
+      /* =====================================================
+         FILTERS
+      ===================================================== */
+
+      filters.forEach(function (button) {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const filter =
+              button.dataset.filter;
+
+
+            filters.forEach(
+              function (filterButton) {
+
+                filterButton
+                  .classList
+                  .remove("active");
+
+              }
+            );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            allItems.forEach(
+              function (item) {
+
+                const show =
+                  filter === "all" ||
+                  item.dataset.type === filter;
+
+
+                if (show) {
+
+                  item.classList.remove(
+                    "mg-hidden"
+                  );
+
+                }
+
+                else {
+
+                  const video =
+                    item.querySelector(
+                      "video"
+                    );
+
+                  if (video) {
+
+                    video.pause();
+
+                    try {
+                      video.currentTime = 0;
+                    } catch (error) {}
+
+                  }
+
+
+                  item.classList.add(
+                    "mg-hidden"
+                  );
+
+                }
+
+              }
+            );
+
+
+            visibleItems =
+              allItems.filter(
+                function (item) {
+
+                  return !item
+                    .classList
+                    .contains(
+                      "mg-hidden"
+                    );
+
+                }
+              );
+
+
+            updateGalleryCount();
+
+          }
+        );
+
+      });
+
+
+      /* =====================================================
+         INITIALIZE
+      ===================================================== */
+
+      updateGalleryCount();
+
     })();
   </script>
+
 </body>
 </html>
