@@ -7,10 +7,6 @@
   <title>Gallery</title>
 
   <style>
-    /* =========================================================
-       BASE
-    ========================================================= */
-
     * {
       box-sizing: border-box;
     }
@@ -40,11 +36,6 @@
       font: inherit;
     }
 
-
-    /* =========================================================
-       GALLERY
-    ========================================================= */
-
     .mg-gallery {
       --mg-bg: #121212;
       --mg-surface: #1b1b1b;
@@ -68,10 +59,49 @@
       margin: 0 auto;
     }
 
+    /* ==========================
+       TOP NAVIGATION
+    ========================== */
 
-    /* =========================================================
+    .mg-nav-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 34px;
+    }
+
+    .mg-nav-main a {
+      color: var(--mg-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+
+      padding: 9px 14px;
+
+      border: 1px solid var(--mg-border);
+      border-radius: 6px;
+
+      transition:
+        color 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .mg-nav-main a:hover {
+      color: var(--mg-text);
+      border-color: var(--mg-border-hover);
+      background: #1d1d1d;
+    }
+
+    .mg-nav-main a.active {
+      background: var(--mg-text);
+      color: #111;
+      border-color: var(--mg-text);
+    }
+
+    /* ==========================
        HEADER
-    ========================================================= */
+    ========================== */
 
     .mg-head {
       margin-bottom: 28px;
@@ -105,10 +135,9 @@
       font-size: 13px;
     }
 
-
-    /* =========================================================
+    /* ==========================
        FILTERS
-    ========================================================= */
+    ========================== */
 
     .mg-filters {
       display: flex;
@@ -168,10 +197,9 @@
       outline-offset: 3px;
     }
 
-
-    /* =========================================================
+    /* ==========================
        GRID
-    ========================================================= */
+    ========================== */
 
     .mg-grid {
       display: grid;
@@ -183,16 +211,10 @@
       gap: var(--mg-gap);
     }
 
-
-    /* =========================================================
-       GALLERY ITEM
-    ========================================================= */
-
     .mg-item {
       position: relative;
 
       margin: 0;
-
       overflow: hidden;
 
       border-radius: 6px;
@@ -265,11 +287,6 @@
       filter: brightness(0.88);
     }
 
-
-    /* =========================================================
-       TYPE LABEL
-    ========================================================= */
-
     .mg-type {
       position: absolute;
       z-index: 3;
@@ -298,11 +315,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-
-    /* =========================================================
-       PLAY ICON
-    ========================================================= */
 
     .mg-play {
       position: absolute;
@@ -350,10 +362,9 @@
       opacity: 0;
     }
 
-
-    /* =========================================================
+    /* ==========================
        LIGHTBOX
-    ========================================================= */
+    ========================== */
 
     .mg-lightbox {
       position: fixed;
@@ -422,11 +433,6 @@
         0 20px 70px rgba(0, 0, 0, 0.35);
     }
 
-
-    /* =========================================================
-       LIGHTBOX TOP BAR
-    ========================================================= */
-
     .mg-lightbox-top {
       position: absolute;
       z-index: 10;
@@ -478,11 +484,6 @@
       transform: rotate(5deg);
     }
 
-
-    /* =========================================================
-       LIGHTBOX NAVIGATION
-    ========================================================= */
-
     .mg-nav {
       position: absolute;
       z-index: 10;
@@ -507,16 +508,6 @@
       font-size: 22px;
 
       cursor: pointer;
-
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    .mg-nav:hover {
-      background: rgba(255, 255, 255, 0.13);
-      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .mg-prev {
@@ -526,19 +517,6 @@
     .mg-next {
       right: 22px;
     }
-
-    .mg-prev:hover {
-      transform: translateY(-50%) translateX(-2px);
-    }
-
-    .mg-next:hover {
-      transform: translateY(-50%) translateX(2px);
-    }
-
-
-    /* =========================================================
-       EMPTY STATE
-    ========================================================= */
 
     .mg-empty {
       display: none;
@@ -550,11 +528,6 @@
 
       font-size: 14px;
     }
-
-
-    /* =========================================================
-       TABLET
-    ========================================================= */
 
     @media (max-width: 900px) {
       .mg-gallery {
@@ -571,14 +544,13 @@
       }
     }
 
-
-    /* =========================================================
-       MOBILE
-    ========================================================= */
-
     @media (max-width: 720px) {
       .mg-gallery {
         padding: 32px 14px 48px;
+      }
+
+      .mg-nav-main {
+        overflow-x: auto;
       }
 
       .mg-head {
@@ -616,47 +588,11 @@
         max-height: 78vh;
       }
 
-      .mg-lightbox-top {
-        top: 14px;
-        left: 14px;
-        right: 14px;
-      }
-
-      .mg-nav {
-        width: 40px;
-        height: 40px;
-
-        top: auto;
-        bottom: 18px;
-
-        transform: none;
-
-        background: rgba(20, 20, 20, 0.8);
-      }
-
-      .mg-prev {
-        left: calc(50% - 52px);
-      }
-
-      .mg-next {
-        right: calc(50% - 52px);
-      }
-
-      .mg-prev:hover,
-      .mg-next:hover {
-        transform: none;
-      }
-
       .mg-type {
         opacity: 1;
         transform: none;
       }
     }
-
-
-    /* =========================================================
-       SMALL MOBILE
-    ========================================================= */
 
     @media (max-width: 420px) {
       .mg-grid {
@@ -666,36 +602,30 @@
       .mg-head h2 {
         font-size: 26px;
       }
-
-      .mg-filter {
-        padding: 7px 13px;
-      }
-    }
-
-
-    /* =========================================================
-       REDUCED MOTION
-    ========================================================= */
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-      }
     }
   </style>
 </head>
-
 
 <body>
 
   <section class="mg-gallery" id="mg-gallery">
 
     <div class="mg-container">
+
+      <!-- MAIN URL NAVIGATION -->
+      <nav class="mg-nav-main">
+        <a href="/" class="active">
+          Home
+        </a>
+
+        <a href="/images/">
+          Images
+        </a>
+
+        <a href="/videos/">
+          Videos
+        </a>
+      </nav>
 
       <!-- HEADER -->
       <div class="mg-head">
@@ -737,7 +667,6 @@
 
       </div>
 
-
       <!-- GRID -->
       <div class="mg-grid" id="mg-grid">
 
@@ -750,7 +679,7 @@
           aria-label="Open artwork"
         >
           <img
-            src="artworks-33JSsucEziFGHKbT-QR8W4Q-t500x500.jpg"
+            src="/images/artworks-33JSsucEziFGHKbT-QR8W4Q-t500x500.jpg"
             alt="Artwork"
             loading="lazy"
           >
@@ -758,7 +687,6 @@
           <span class="mg-type">Photo</span>
         </figure>
 
-
         <!-- VIDEO -->
         <figure
           class="mg-item mg-span-2"
@@ -768,7 +696,7 @@
           aria-label="Open video"
         >
           <video
-            src="vidssave.comElMatador1080p60.mp4"
+            src="/videos/vidssave.comElMatador1080p60.mp4"
             muted
             loop
             playsinline
@@ -779,7 +707,6 @@
           <span class="mg-type">Video</span>
         </figure>
 
-
         <!-- VIDEO -->
         <figure
           class="mg-item mg-span-2"
@@ -789,7 +716,7 @@
           aria-label="Open video"
         >
           <video
-            src="vidssave.comVR46Status720p.mp4"
+            src="/videos/vidssave.comVR46Status720p.mp4"
             muted
             loop
             playsinline
@@ -799,7 +726,6 @@
           <span class="mg-play">▶</span>
           <span class="mg-type">Video</span>
         </figure>
-
 
         <!-- IMAGE -->
         <figure
@@ -810,14 +736,13 @@
           aria-label="Open boxing gloves image"
         >
           <img
-            src="Pngtreeboxinggloves6129663.png"
+            src="/images/Pngtreeboxinggloves6129663.png"
             alt="Boxing gloves"
             loading="lazy"
           >
 
           <span class="mg-type">Photo</span>
         </figure>
-
 
         <!-- IMAGE -->
         <figure
@@ -828,14 +753,13 @@
           aria-label="Open Hajime no Ippo GIF"
         >
           <img
-            src="HajimenoippoGIF.gif"
+            src="/images/HajimenoippoGIF.gif"
             alt="Hajime no Ippo GIF"
             loading="lazy"
           >
 
           <span class="mg-type">GIF</span>
         </figure>
-
 
         <!-- IMAGE -->
         <figure
@@ -846,7 +770,7 @@
           aria-label="Open Hajime no Ippo end GIF"
         >
           <img
-            src="hajimenoippoend-hajime.gif"
+            src="/images/hajimenoippoend-hajime.gif"
             alt="Hajime no Ippo end GIF"
             loading="lazy"
           >
@@ -856,7 +780,6 @@
 
       </div>
 
-
       <div class="mg-empty" id="mg-empty">
         No media found.
       </div>
@@ -865,11 +788,7 @@
 
   </section>
 
-
-  <!-- =======================================================
-       LIGHTBOX
-  ======================================================== -->
-
+  <!-- LIGHTBOX -->
   <div
     class="mg-lightbox"
     id="mg-lightbox"
@@ -896,7 +815,6 @@
 
     </div>
 
-
     <button
       class="mg-nav mg-prev"
       id="mg-prev"
@@ -906,12 +824,10 @@
       ‹
     </button>
 
-
     <div
       class="mg-lightbox-inner"
       id="mg-lightbox-inner"
     ></div>
-
 
     <button
       class="mg-nav mg-next"
@@ -924,14 +840,8 @@
 
   </div>
 
-
-
   <script>
     (function () {
-
-      /* =====================================================
-         ELEMENTS
-      ===================================================== */
 
       const filters = Array.from(
         document.querySelectorAll(".mg-filter")
@@ -965,15 +875,8 @@
       const emptyState =
         document.getElementById("mg-empty");
 
-
       let visibleItems = [...allItems];
-
       let currentIndex = 0;
-
-
-      /* =====================================================
-         GALLERY COUNT
-      ===================================================== */
 
       function updateGalleryCount() {
         const count = visibleItems.length;
@@ -985,17 +888,11 @@
           count === 0 ? "block" : "none";
       }
 
-
-      /* =====================================================
-         VIDEO HOVER PREVIEW
-      ===================================================== */
-
       allItems.forEach(function (item) {
 
         const video = item.querySelector("video");
 
         if (!video) return;
-
 
         item.addEventListener("mouseenter", function () {
 
@@ -1004,12 +901,9 @@
             .then(function () {
               item.classList.add("mg-video-playing");
             })
-            .catch(function () {
-              // Browser may prevent autoplay.
-            });
+            .catch(function () {});
 
         });
-
 
         item.addEventListener("mouseleave", function () {
 
@@ -1025,11 +919,6 @@
 
       });
 
-
-      /* =====================================================
-         OPEN LIGHTBOX
-      ===================================================== */
-
       function openLightbox(item) {
 
         visibleItems =
@@ -1037,18 +926,14 @@
             return !element.classList.contains("mg-hidden");
           });
 
-
         currentIndex =
           visibleItems.indexOf(item);
-
 
         if (currentIndex === -1) {
           return;
         }
 
-
         renderLightbox();
-
 
         lightbox.classList.add("open");
 
@@ -1061,31 +946,20 @@
           "mg-no-scroll"
         );
 
-
         closeBtn.focus();
-
       }
-
-
-      /* =====================================================
-         RENDER LIGHTBOX MEDIA
-      ===================================================== */
 
       function renderLightbox() {
 
         const item =
           visibleItems[currentIndex];
 
-
         if (!item) return;
-
 
         const type =
           item.dataset.type;
 
-
         lightboxInner.innerHTML = "";
-
 
         if (type === "image") {
 
@@ -1102,10 +976,7 @@
 
           lightboxInner.appendChild(image);
 
-        }
-
-
-        else if (type === "video") {
+        } else if (type === "video") {
 
           const original =
             item.querySelector("video");
@@ -1116,25 +987,20 @@
           video.src = original.src;
 
           video.controls = true;
-
           video.autoplay = true;
-
           video.playsInline = true;
 
           lightboxInner.appendChild(video);
 
         }
 
-
         lightboxCounter.textContent =
           (currentIndex + 1) +
           " / " +
           visibleItems.length;
 
-
         const shouldShowNavigation =
           visibleItems.length > 1;
-
 
         prevBtn.style.display =
           shouldShowNavigation
@@ -1146,11 +1012,6 @@
             ? "flex"
             : "none";
       }
-
-
-      /* =====================================================
-         CLOSE LIGHTBOX
-      ===================================================== */
 
       function closeLightbox() {
 
@@ -1165,14 +1026,12 @@
           "mg-no-scroll"
         );
 
-
         const video =
           lightboxInner.querySelector("video");
 
         if (video) {
           video.pause();
         }
-
 
         setTimeout(function () {
 
@@ -1183,20 +1042,13 @@
           }
 
         }, 220);
-
       }
-
-
-      /* =====================================================
-         PREVIOUS / NEXT
-      ===================================================== */
 
       function previousItem() {
 
         if (visibleItems.length <= 1) {
           return;
         }
-
 
         currentIndex =
           (
@@ -1206,18 +1058,14 @@
           ) %
           visibleItems.length;
 
-
         renderLightbox();
-
       }
-
 
       function nextItem() {
 
         if (visibleItems.length <= 1) {
           return;
         }
-
 
         currentIndex =
           (
@@ -1226,15 +1074,8 @@
           ) %
           visibleItems.length;
 
-
         renderLightbox();
-
       }
-
-
-      /* =====================================================
-         OPEN ITEMS
-      ===================================================== */
 
       allItems.forEach(function (item) {
 
@@ -1244,7 +1085,6 @@
             openLightbox(item);
           }
         );
-
 
         item.addEventListener(
           "keydown",
@@ -1266,16 +1106,10 @@
 
       });
 
-
-      /* =====================================================
-         LIGHTBOX EVENTS
-      ===================================================== */
-
       closeBtn.addEventListener(
         "click",
         closeLightbox
       );
-
 
       prevBtn.addEventListener(
         "click",
@@ -1288,7 +1122,6 @@
         }
       );
 
-
       nextBtn.addEventListener(
         "click",
         function (event) {
@@ -1299,7 +1132,6 @@
 
         }
       );
-
 
       lightbox.addEventListener(
         "click",
@@ -1317,7 +1149,6 @@
         }
       );
 
-
       document.addEventListener(
         "keydown",
         function (event) {
@@ -1328,34 +1159,20 @@
             return;
           }
 
-
           if (event.key === "Escape") {
-
             closeLightbox();
-
           }
-
 
           else if (event.key === "ArrowLeft") {
-
             previousItem();
-
           }
 
-
           else if (event.key === "ArrowRight") {
-
             nextItem();
-
           }
 
         }
       );
-
-
-      /* =====================================================
-         FILTERS
-      ===================================================== */
 
       filters.forEach(function (button) {
 
@@ -1365,7 +1182,6 @@
 
             const filter =
               button.dataset.filter;
-
 
             filters.forEach(
               function (filterButton) {
@@ -1377,11 +1193,9 @@
               }
             );
 
-
             button.classList.add(
               "active"
             );
-
 
             allItems.forEach(
               function (item) {
@@ -1390,16 +1204,13 @@
                   filter === "all" ||
                   item.dataset.type === filter;
 
-
                 if (show) {
 
                   item.classList.remove(
                     "mg-hidden"
                   );
 
-                }
-
-                else {
+                } else {
 
                   const video =
                     item.querySelector(
@@ -1416,7 +1227,6 @@
 
                   }
 
-
                   item.classList.add(
                     "mg-hidden"
                   );
@@ -1425,7 +1235,6 @@
 
               }
             );
-
 
             visibleItems =
               allItems.filter(
@@ -1440,18 +1249,12 @@
                 }
               );
 
-
             updateGalleryCount();
 
           }
         );
 
       });
-
-
-      /* =====================================================
-         INITIALIZE
-      ===================================================== */
 
       updateGalleryCount();
 
