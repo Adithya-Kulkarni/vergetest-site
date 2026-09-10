@@ -6,7 +6,6 @@
 
   <title>Gallery</title>
 
-  <link rel="stylesheet" href="/css/optimization-test.css">
 
   <style>
     * {
@@ -565,6 +564,123 @@
         font-size: 26px;
       }
     }
+  
+    /* ==========================
+       CSS + JS OPTIMIZATION TEST
+       Intentionally readable and spaced out
+    ========================== */
+
+    .opt-test-card {
+      margin-bottom: 28px;
+      padding: 20px 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+
+      border: 1px solid #3d4947;
+      border-radius: 8px;
+
+      background: #1b2422;
+      color: #f2f0ea;
+
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .opt-test-card:hover {
+      background: #202b29;
+      border-color: #596a66;
+    }
+
+    .opt-test-card.opt-active {
+      transform: translateY(-2px);
+      border-color: #c98f4e;
+    }
+
+    .opt-test-card h3 {
+      margin: 0 0 6px;
+
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .opt-test-card p {
+      margin: 0;
+
+      color: #aaa59d;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .opt-test-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      flex-shrink: 0;
+    }
+
+    #opt-test-button {
+      min-height: 40px;
+      padding: 9px 16px;
+
+      border: 1px solid #c98f4e;
+      border-radius: 6px;
+
+      background: #c98f4e;
+      color: #111111;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.18s ease,
+        filter 0.18s ease;
+    }
+
+    #opt-test-button:hover {
+      filter: brightness(1.08);
+    }
+
+    #opt-test-button:active {
+      transform: scale(0.97);
+    }
+
+    #opt-test-status {
+      min-width: 120px;
+
+      color: #9a958c;
+
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    #opt-test-status.opt-success {
+      color: #9dd6b1;
+    }
+
+    @media (max-width: 720px) {
+      .opt-test-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .opt-test-controls {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+    }
+
   </style>
 </head>
 
@@ -611,23 +727,40 @@
 
 
       <!-- CSS / JAVASCRIPT OPTIMIZATION TEST -->
-      <section class="opt-test-card" aria-labelledby="opt-test-title">
-        <div class="opt-test-copy">
-          <h3 id="opt-test-title">CSS + JavaScript Optimization Test</h3>
+      <!-- CSS / JAVASCRIPT OPTIMIZATION TEST -->
+      <section class="opt-test-card" id="opt-test-card">
+        <div>
+          <h3>CSS + JavaScript Test</h3>
           <p>
-            This block is styled by an external CSS file and the button below
-            is controlled by an external JavaScript file.
+            This section uses embedded CSS and JavaScript so it works from this HTML file alone.
           </p>
         </div>
 
-        <div class="opt-test-actions">
-          <button id="opt-test-button" class="opt-test-button" type="button">
+        <div class="opt-test-controls">
+          <button id="opt-test-button" type="button">
             Run JavaScript Test
           </button>
 
-          <span id="opt-test-status" class="opt-test-status">
-            JavaScript waiting...
-          </span>
+          <span id="opt-test-status">Ready</span>
+        </div>
+      </section>
+
+
+      <!-- CSS / JAVASCRIPT OPTIMIZATION TEST -->
+      <section class="opt-test-card" id="opt-test-card">
+        <div>
+          <h3>CSS + JavaScript Test</h3>
+          <p>
+            This section uses embedded CSS and JavaScript so it works from this HTML file alone.
+          </p>
+        </div>
+
+        <div class="opt-test-controls">
+          <button id="opt-test-button" type="button">
+            Run JavaScript Test
+          </button>
+
+          <span id="opt-test-status">Ready</span>
         </div>
       </section>
 
@@ -1155,7 +1288,39 @@ const allItems = Array.from(
     })();
   </script>
 
-  <script src="/js/optimization-test.js" defer></script>
+
+  <script>
+    (function () {
+      var testButton = document.getElementById("opt-test-button");
+      var testStatus = document.getElementById("opt-test-status");
+      var testCard = document.getElementById("opt-test-card");
+
+      var clickCount = 0;
+
+      if (!testButton || !testStatus || !testCard) {
+        return;
+      }
+
+      testStatus.textContent = "JavaScript loaded";
+      testStatus.classList.add("opt-success");
+
+      testButton.addEventListener("click", function () {
+        clickCount = clickCount + 1;
+
+        testStatus.textContent =
+          "Working • " +
+          clickCount +
+          (clickCount === 1 ? " click" : " clicks");
+
+        testCard.classList.toggle("opt-active");
+
+        testButton.textContent =
+          clickCount % 2 === 0
+            ? "Run JavaScript Test"
+            : "JavaScript Works";
+      });
+    })();
+  </script>
 
 </body>
 </html>
