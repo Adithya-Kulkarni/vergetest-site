@@ -1,93 +1,113 @@
 /*
-JAVASCRIPT OPTIMIZATION TEST
-
-This file intentionally contains comments,
-whitespace and readable variable names so
-JavaScript minification can be tested.
+VERGECLOUD JAVASCRIPT OPTIMIZATION TEST
+This is intentionally unminified.
 */
 
 (function () {
 
     "use strict";
 
-    var testButton =
+    var button =
         document.getElementById(
             "opt-test-button"
         );
 
-    var testStatus =
+    var ball =
+        document.getElementById(
+            "opt-animation-ball"
+        );
+
+    var status =
         document.getElementById(
             "opt-test-status"
         );
 
-    var testCard =
-        document.querySelector(
-            ".opt-test-card"
+    var counter =
+        document.getElementById(
+            "opt-test-counter"
         );
 
-    var clickCount =
+    var mode =
         0;
 
-    function updateStatus() {
+    var clicks =
+        0;
 
-        clickCount =
-            clickCount + 1;
+    if (
+        !button ||
+        !ball ||
+        !status ||
+        !counter
+    ) {
 
-        testStatus.textContent =
-            "JavaScript working: " +
-            clickCount +
-            (
-                clickCount === 1
-                    ? " click"
-                    : " clicks"
-            );
-
-        testStatus.classList.add(
-            "success"
+        console.error(
+            "Optimization test could not initialize."
         );
 
-        testCard.classList.toggle(
-            "js-active"
-        );
+        return;
 
-        console.log(
-            "JavaScript optimization test click:",
-            clickCount
-        );
     }
 
-    function initializeTest() {
+    status.textContent =
+        "External JavaScript loaded";
 
-        if (
-            !testButton ||
-            !testStatus ||
-            !testCard
-        ) {
+    button.addEventListener(
+        "click",
+        function () {
 
-            console.error(
-                "Optimization test elements not found."
+            clicks =
+                clicks + 1;
+
+            counter.textContent =
+                clicks;
+
+            mode =
+                (mode + 1) % 3;
+
+            ball.classList.remove(
+                "fast",
+                "paused"
             );
 
-            return;
+            if (mode === 1) {
+
+                ball.classList.add(
+                    "fast"
+                );
+
+                button.textContent =
+                    "Pause Animation";
+
+                status.textContent =
+                    "JavaScript: fast mode";
+
+            }
+
+            else if (mode === 2) {
+
+                ball.classList.add(
+                    "paused"
+                );
+
+                button.textContent =
+                    "Resume Animation";
+
+                status.textContent =
+                    "JavaScript: paused";
+
+            }
+
+            else {
+
+                button.textContent =
+                    "Speed Up Animation";
+
+                status.textContent =
+                    "JavaScript: normal mode";
+
+            }
+
         }
-
-        testStatus.textContent =
-            "JavaScript loaded";
-
-        testStatus.classList.add(
-            "success"
-        );
-
-        testButton.addEventListener(
-            "click",
-            updateStatus
-        );
-
-        console.log(
-            "Optimization test JavaScript loaded."
-        );
-    }
-
-    initializeTest();
+    );
 
 })();
