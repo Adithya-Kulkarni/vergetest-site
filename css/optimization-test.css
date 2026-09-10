@@ -1,0 +1,107 @@
+/* CSS OPTIMIZATION TEST
+   This comment and whitespace are intentionally included
+   so minification can be verified.
+*/
+
+.opt-test-card {
+    margin-bottom: 28px;
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    background-color: #1b2422;
+    color: #f2f0ea;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #43514e;
+
+    border-radius: 8px;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.opt-test-card:hover {
+    background-color: #25302e;
+}
+
+.opt-test-card.js-active {
+    transform: translateY(-3px);
+    border-color: #f05a28;
+}
+
+.opt-test-copy h3 {
+    margin-top: 0;
+    margin-bottom: 6px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.opt-test-copy p {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    color: #b8c0be;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.opt-test-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.opt-test-button {
+    padding-top: 10px;
+    padding-right: 16px;
+    padding-bottom: 10px;
+    padding-left: 16px;
+
+    background-color: #f05a28;
+    color: #ffffff;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: #f05a28;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.opt-test-button:hover {
+    background-color: #ff6b37;
+}
+
+.opt-test-button:active {
+    transform: scale(0.97);
+}
+
+.opt-test-status {
+    color: #9a958c;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.opt-test-status.success {
+    color: #9dd6b1;
+}
