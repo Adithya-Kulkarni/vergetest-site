@@ -6,6 +6,8 @@
 
   <title>Gallery</title>
 
+  <link rel="stylesheet" href="/css/optimization-test.css">
+
   <style>
     * {
       box-sizing: border-box;
@@ -607,6 +609,28 @@
 
       </div>
 
+
+      <!-- CSS / JAVASCRIPT OPTIMIZATION TEST -->
+      <section class="opt-test-card" aria-labelledby="opt-test-title">
+        <div class="opt-test-copy">
+          <h3 id="opt-test-title">CSS + JavaScript Optimization Test</h3>
+          <p>
+            This block is styled by an external CSS file and the button below
+            is controlled by an external JavaScript file.
+          </p>
+        </div>
+
+        <div class="opt-test-actions">
+          <button id="opt-test-button" class="opt-test-button" type="button">
+            Run JavaScript Test
+          </button>
+
+          <span id="opt-test-status" class="opt-test-status">
+            JavaScript waiting...
+          </span>
+        </div>
+      </section>
+
       <!-- GRID -->
       <div class="mg-grid" id="mg-grid">
 
@@ -727,7 +751,7 @@
           aria-label="Open Mercedes-Benz image"
         >
           <img
-            src="/images/mercbenz.avif"
+            src="/images/mercbenz.jpg"
             alt="Mercedes-Benz"
             loading="lazy"
           >
@@ -1130,6 +1154,8 @@ const allItems = Array.from(
 
     })();
   </script>
+
+  <script src="/js/optimization-test.js" defer></script>
 
 </body>
 </html>
