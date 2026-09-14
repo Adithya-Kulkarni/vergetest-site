@@ -5,39 +5,267 @@ VERGECLOUD JAVASCRIPT OPTIMIZATION TEST
 
 PURPOSE
 
-This JavaScript file has intentionally been written in an unnecessarily
-verbose and human-readable style.
+This JavaScript file has deliberately been written in a very inefficient,
+verbose and human-readable format.
 
-The purpose is to create a useful test file for VergeCloud JavaScript
-Optimization.
+The purpose of this file is NOT to demonstrate good JavaScript coding style.
 
-BEFORE OPTIMIZATION
+The purpose is specifically to create a JavaScript asset that contains enough:
 
-You should be able to see:
+- comments
+- whitespace
+- blank lines
+- indentation
+- long variable names
+- verbose functions
+- repeated documentation
+- unnecessary formatting
 
-- This large comment
-- Lots of whitespace
-- Long variable names
-- Multiple helper functions
-- Multiple line breaks
-- Human-readable formatting
+to make VergeCloud JavaScript Optimization easy to test.
 
-AFTER OPTIMIZATION
+===============================================================================
 
-A JavaScript optimizer/minifier may:
+WHAT SHOULD HAPPEN WHEN OPTIMIZATION IS OFF
 
-- Remove these comments
-- Remove whitespace
-- Remove unnecessary line breaks
-- Shorten internal code
-- Reduce total response size
+The browser/CDN should receive a large JavaScript file containing:
+
+1. These comments
+2. Hundreds of line breaks
+3. Large amounts of whitespace
+4. Long variable names
+5. Human-readable formatting
+6. Repeated documentation blocks
+
+===============================================================================
+
+WHAT SHOULD HAPPEN WHEN OPTIMIZATION IS ON
+
+A JavaScript minifier would normally:
+
+1. Remove these comments
+2. Remove blank lines
+3. Remove unnecessary spaces
+4. Collapse the code into very few lines
+5. Potentially shorten internal expressions
+6. Reduce the total number of bytes transferred
+
+===============================================================================
 
 FUNCTIONAL REQUIREMENT
 
-The animation controls must continue to work after optimization.
+Despite optimization, the application must continue to work.
+
+The expected visible behavior is:
+
+NORMAL MODE
+The orange ball moves normally.
+
+FIRST BUTTON CLICK
+The orange ball moves faster.
+
+SECOND BUTTON CLICK
+The orange ball pauses.
+
+THIRD BUTTON CLICK
+The orange ball resumes normal movement.
+
+The click counter should also increase every time.
+
+===============================================================================
+
+VERGECLOUD TEST MARKER
+
+VC_JS_OPTIMIZATION_TEST_MAIN_COMMENT
+
+If JavaScript optimization removes comments, this marker should disappear from
+the optimized response.
 
 ===============================================================================
 */
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 01
+===============================================================================
+
+This entire section exists only to increase the unoptimized JavaScript size.
+
+A minifier can safely remove this comment because it has absolutely no effect
+on the JavaScript application.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_01
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 02
+===============================================================================
+
+Whitespace between JavaScript statements normally has no functional purpose.
+
+The large amount of whitespace used throughout this file exists deliberately
+so that the optimization system has additional characters that it can remove.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_02
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 03
+===============================================================================
+
+This is another intentionally unnecessary documentation section.
+
+The VergeCloud optimizer should ideally remove comments like this while
+preserving the actual executable JavaScript.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_03
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 04
+===============================================================================
+
+The source file should remain easy to inspect while optimization is disabled.
+
+When optimization is enabled, this explanatory text does not need to be sent
+to the browser.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_04
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 05
+===============================================================================
+
+This block is deliberately repetitive.
+
+It exists to create an obvious difference between the unoptimized source and
+the optimized source.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_05
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 06
+===============================================================================
+
+None of the text inside this comment is required for the animation.
+
+It is therefore removable during JavaScript minification.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_06
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 07
+===============================================================================
+
+The application should behave exactly the same whether this comment exists or
+whether a minifier removes it completely.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_07
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 08
+===============================================================================
+
+This is additional test payload.
+
+It increases the byte size of the original JavaScript source without affecting
+the output of the application.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_08
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 09
+===============================================================================
+
+The JavaScript optimization feature can be verified by comparing:
+
+OFF:
+large file
+many lines
+comments present
+
+ON:
+smaller file
+few lines
+comments absent
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_09
+
+===============================================================================
+*/
+
+
+/*
+===============================================================================
+MINIFICATION TEST COMMENT BLOCK 10
+===============================================================================
+
+This is the final large pre-execution comment block.
+
+More verbose executable JavaScript follows below.
+
+Marker:
+
+VC_JS_COMMENT_BLOCK_10
+
+===============================================================================
+*/
+
 
 
 (function () {
@@ -50,7 +278,7 @@ The animation controls must continue to work after optimization.
     /*
     ===========================================================================
     SECTION 01
-    DOM ELEMENT REFERENCES
+    FIND THE REQUIRED HTML ELEMENTS
     ===========================================================================
     */
 
@@ -100,7 +328,7 @@ The animation controls must continue to work after optimization.
     /*
     ===========================================================================
     SECTION 02
-    APPLICATION STATE
+    APPLICATION STATE VARIABLES
     ===========================================================================
     */
 
@@ -132,7 +360,7 @@ The animation controls must continue to work after optimization.
     /*
     ===========================================================================
     SECTION 03
-    VALIDATION
+    VALIDATION FUNCTION
     ===========================================================================
     */
 
@@ -187,8 +415,7 @@ The animation controls must continue to work after optimization.
     /*
     ===========================================================================
     SECTION 04
-    UTILITY FUNCTION
-    FORMAT NUMBER
+    NUMBER TO TEXT CONVERSION
     ===========================================================================
     */
 
@@ -198,7 +425,7 @@ The animation controls must continue to work after optimization.
     ) {
 
 
-        var textValue =
+        var convertedNumber =
             String(
                 numberValue
             );
@@ -206,7 +433,7 @@ The animation controls must continue to work after optimization.
 
 
         return (
-            textValue
+            convertedNumber
         );
 
     }
@@ -216,8 +443,7 @@ The animation controls must continue to work after optimization.
     /*
     ===========================================================================
     SECTION 05
-    UTILITY FUNCTION
-    CURRENT TIME
+    LEADING ZERO HELPER
     ===========================================================================
     */
 
@@ -232,23 +458,41 @@ The animation controls must continue to work after optimization.
         ) {
 
 
-            return (
+            var valueWithLeadingZero =
                 "0" +
-                numberValue
+                numberValue;
+
+
+
+            return (
+                valueWithLeadingZero
             );
 
         }
 
 
 
-        return (
+        var regularNumberValue =
             String(
                 numberValue
-            )
+            );
+
+
+
+        return (
+            regularNumberValue
         );
 
     }
 
+
+
+    /*
+    ===========================================================================
+    SECTION 06
+    CURRENT TIME GENERATOR
+    ===========================================================================
+    */
 
 
     function getCurrentTime() {
@@ -299,8 +543,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 06
-    UPDATE COUNTER
+    SECTION 07
+    UPDATE CLICK COUNTER
     ===========================================================================
     */
 
@@ -335,8 +579,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 07
-    UPDATE STATUS
+    SECTION 08
+    UPDATE STATUS MESSAGE
     ===========================================================================
     */
 
@@ -366,8 +610,113 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 08
-    RESET ANIMATION CLASSES
+    SECTION 09
+    UPDATE CARD STATE
+    ===========================================================================
+    */
+
+
+    function updateCardState(
+        newState
+    ) {
+
+
+        if (
+            !optimizationTestCard
+        ) {
+
+
+            return;
+
+        }
+
+
+
+        optimizationTestCard.setAttribute(
+            "data-state",
+            newState
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 10
+    ACTIVATE ANIMATION STAGE
+    ===========================================================================
+    */
+
+
+    function activateAnimationStage() {
+
+
+        if (
+            !animationStage
+        ) {
+
+
+            return;
+
+        }
+
+
+
+        animationStage.classList.remove(
+            "inactive"
+        );
+
+
+
+        animationStage.classList.add(
+            "active"
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 11
+    DEACTIVATE ANIMATION STAGE
+    ===========================================================================
+    */
+
+
+    function deactivateAnimationStage() {
+
+
+        if (
+            !animationStage
+        ) {
+
+
+            return;
+
+        }
+
+
+
+        animationStage.classList.remove(
+            "active"
+        );
+
+
+
+        animationStage.classList.add(
+            "inactive"
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 12
+    REMOVE ALL SPECIAL ANIMATION CLASSES
     ===========================================================================
     */
 
@@ -395,8 +744,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 09
-    NORMAL MODE
+    SECTION 13
+    NORMAL ANIMATION MODE
     ===========================================================================
     */
 
@@ -413,48 +762,25 @@ The animation controls must continue to work after optimization.
 
 
 
-        updateStatusMessage(
+        var normalStatusMessage =
             "JavaScript: normal mode at " +
-            getCurrentTime()
+            getCurrentTime();
+
+
+
+        updateStatusMessage(
+            normalStatusMessage
         );
 
 
 
-        if (
-            optimizationTestCard
-        ) {
-
-
-            optimizationTestCard
-                .setAttribute(
-                    "data-state",
-                    "normal"
-                );
-
-        }
+        updateCardState(
+            "normal"
+        );
 
 
 
-        if (
-            animationStage
-        ) {
-
-
-            animationStage
-                .classList
-                .remove(
-                    "inactive"
-                );
-
-
-
-            animationStage
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
+        activateAnimationStage();
 
     }
 
@@ -462,8 +788,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 10
-    FAST MODE
+    SECTION 14
+    FAST ANIMATION MODE
     ===========================================================================
     */
 
@@ -488,40 +814,25 @@ The animation controls must continue to work after optimization.
 
 
 
-        updateStatusMessage(
+        var fastStatusMessage =
             "JavaScript: fast mode at " +
-            getCurrentTime()
+            getCurrentTime();
+
+
+
+        updateStatusMessage(
+            fastStatusMessage
         );
 
 
 
-        if (
-            optimizationTestCard
-        ) {
-
-
-            optimizationTestCard
-                .setAttribute(
-                    "data-state",
-                    "fast"
-                );
-
-        }
+        updateCardState(
+            "fast"
+        );
 
 
 
-        if (
-            animationStage
-        ) {
-
-
-            animationStage
-                .classList
-                .add(
-                    "active"
-                );
-
-        }
+        activateAnimationStage();
 
     }
 
@@ -529,8 +840,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 11
-    PAUSED MODE
+    SECTION 15
+    PAUSED ANIMATION MODE
     ===========================================================================
     */
 
@@ -555,48 +866,25 @@ The animation controls must continue to work after optimization.
 
 
 
-        updateStatusMessage(
+        var pausedStatusMessage =
             "JavaScript: paused at " +
-            getCurrentTime()
+            getCurrentTime();
+
+
+
+        updateStatusMessage(
+            pausedStatusMessage
         );
 
 
 
-        if (
-            optimizationTestCard
-        ) {
-
-
-            optimizationTestCard
-                .setAttribute(
-                    "data-state",
-                    "paused"
-                );
-
-        }
+        updateCardState(
+            "paused"
+        );
 
 
 
-        if (
-            animationStage
-        ) {
-
-
-            animationStage
-                .classList
-                .remove(
-                    "active"
-                );
-
-
-
-            animationStage
-                .classList
-                .add(
-                    "inactive"
-                );
-
-        }
+        deactivateAnimationStage();
 
     }
 
@@ -604,8 +892,233 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 12
-    CHANGE ANIMATION MODE
+    SECTION 16
+    VERBOSE DIAGNOSTIC MESSAGE BUILDER
+    ===========================================================================
+    */
+
+
+    function buildVerboseDiagnosticMessage(
+        diagnosticLabel,
+        diagnosticValue
+    ) {
+
+
+        var diagnosticPrefix =
+            "[VergeCloud JS Optimization Diagnostic] ";
+
+
+
+        var diagnosticLabelText =
+            String(
+                diagnosticLabel
+            );
+
+
+
+        var diagnosticSeparator =
+            " = ";
+
+
+
+        var diagnosticValueText =
+            String(
+                diagnosticValue
+            );
+
+
+
+        var diagnosticTimestamp =
+            " at " +
+            getCurrentTime();
+
+
+
+        var completeDiagnosticMessage =
+            diagnosticPrefix +
+            diagnosticLabelText +
+            diagnosticSeparator +
+            diagnosticValueText +
+            diagnosticTimestamp;
+
+
+
+        return (
+            completeDiagnosticMessage
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 17
+    BUILD DIAGNOSTIC DATA
+    ===========================================================================
+    */
+
+
+    function buildDiagnosticCollection() {
+
+
+        var diagnostics =
+            [];
+
+
+
+        diagnostics.push(
+            [
+                "buttonExists",
+                Boolean(
+                    animationControlButton
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "ballExists",
+                Boolean(
+                    animatedOrangeBall
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "statusExists",
+                Boolean(
+                    javascriptStatusMessage
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "counterExists",
+                Boolean(
+                    interactionCounter
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "cardExists",
+                Boolean(
+                    optimizationTestCard
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "stageExists",
+                Boolean(
+                    animationStage
+                )
+            ]
+        );
+
+
+
+        diagnostics.push(
+            [
+                "animationModeCount",
+                animationModes.length
+            ]
+        );
+
+
+
+        return (
+            diagnostics
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 18
+    PRINT DIAGNOSTICS
+    ===========================================================================
+    */
+
+
+    function printDiagnosticCollection(
+        diagnosticCollection
+    ) {
+
+
+        if (
+            !Array.isArray(
+                diagnosticCollection
+            )
+        ) {
+
+
+            return;
+
+        }
+
+
+
+        diagnosticCollection.forEach(
+            function (
+                diagnosticEntry
+            ) {
+
+
+                var diagnosticLabel =
+                    diagnosticEntry[
+                        0
+                    ];
+
+
+
+                var diagnosticValue =
+                    diagnosticEntry[
+                        1
+                    ];
+
+
+
+                var diagnosticMessage =
+                    buildVerboseDiagnosticMessage(
+                        diagnosticLabel,
+                        diagnosticValue
+                    );
+
+
+
+                console.debug(
+                    diagnosticMessage
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /*
+    ===========================================================================
+    SECTION 19
+    HANDLE BUTTON CLICK
     ===========================================================================
     */
 
@@ -665,13 +1178,18 @@ The animation controls must continue to work after optimization.
 
 
 
+        var currentModeName =
+            animationModes[
+                currentAnimationMode
+            ];
+
+
+
         console.log(
             "[VergeCloud Optimization Test]",
             {
                 mode:
-                    animationModes[
-                        currentAnimationMode
-                    ],
+                    currentModeName,
 
                 clicks:
                     totalNumberOfClicks,
@@ -687,8 +1205,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 13
-    DEBUG INFORMATION
+    SECTION 20
+    PRINT INITIALIZATION INFORMATION
     ===========================================================================
     */
 
@@ -709,19 +1227,13 @@ The animation controls must continue to work after optimization.
 
 
         console.log(
-            "External JavaScript loaded successfully."
+            "Large unoptimized JavaScript loaded successfully."
         );
 
 
 
         console.log(
-            "Animation controls initialized."
-        );
-
-
-
-        console.log(
-            "Current mode:",
+            "Current animation mode:",
             animationModes[
                 currentAnimationMode
             ]
@@ -730,7 +1242,14 @@ The animation controls must continue to work after optimization.
 
 
         console.log(
-            "Loaded at:",
+            "Current click count:",
+            totalNumberOfClicks
+        );
+
+
+
+        console.log(
+            "JavaScript loaded at:",
             getCurrentTime()
         );
 
@@ -746,8 +1265,8 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 14
-    INITIALIZATION
+    SECTION 21
+    INITIALIZE APPLICATION
     ===========================================================================
     */
 
@@ -758,6 +1277,12 @@ The animation controls must continue to work after optimization.
         if (
             optimizationTestInitialized === true
         ) {
+
+
+            console.warn(
+                "Optimization test has already been initialized."
+            );
+
 
 
             return;
@@ -802,25 +1327,21 @@ The animation controls must continue to work after optimization.
 
 
 
-        updateStatusMessage(
+        var initialStatusMessage =
             "External JavaScript loaded at " +
-            getCurrentTime()
+            getCurrentTime();
+
+
+
+        updateStatusMessage(
+            initialStatusMessage
         );
 
 
 
-        if (
-            optimizationTestCard
-        ) {
-
-
-            optimizationTestCard
-                .setAttribute(
-                    "data-state",
-                    "ready"
-                );
-
-        }
+        updateCardState(
+            "ready"
+        );
 
 
 
@@ -832,6 +1353,17 @@ The animation controls must continue to work after optimization.
 
 
 
+        var initializationDiagnostics =
+            buildDiagnosticCollection();
+
+
+
+        printDiagnosticCollection(
+            initializationDiagnostics
+        );
+
+
+
         printInitializationInformation();
 
     }
@@ -840,7 +1372,7 @@ The animation controls must continue to work after optimization.
 
     /*
     ===========================================================================
-    SECTION 15
+    SECTION 22
     START APPLICATION
     ===========================================================================
     */
@@ -855,6 +1387,25 @@ The animation controls must continue to work after optimization.
 
 /*
 ===============================================================================
-END OF VERGECLOUD JAVASCRIPT OPTIMIZATION TEST
+ADDITIONAL POST-SCRIPT MINIFICATION TEST COMMENT
+===============================================================================
+
+Everything inside this final comment is unnecessary for execution.
+
+It is deliberately placed after the JavaScript application so that the source
+contains removable content at both the beginning and end of the file.
+
+A JavaScript minifier should normally delete this entire section.
+
+Markers:
+
+VC_JS_FINAL_COMMENT
+VC_JS_OPTIMIZATION_TEST_COMPLETE
+
+When optimization is disabled you should be able to find these strings.
+
+When optimization is enabled and comments are being stripped, these markers
+should no longer appear in the delivered JavaScript response.
+
 ===============================================================================
 */
